@@ -1,0 +1,121 @@
+var users: user[10] = none;
+
+fn init_users(loop i, string name): none
+{
+	users[i] = user(f"{name} {i}");
+}
+repeat(10, init_users, "Brian"); // demonstracao de loop
+
+fn hello(): none
+{
+	print("Hello world");
+}
+foreach(users, it.hello); // Executa o metodo users.hello()
+foreach(users, hello); // executa a hello nesse arquivo
+
+// if com logica simples
+if(users.size() < 20, fn(){
+	print("We've got less than 20 users. ;-;");
+});
+
+
+// switch case
+switch(users.size(), {
+	0: fn(){ print("No user is here"); },
+	1: fn(){ print("We got one user yeeey"); },
+	2: fn(){ print("Wow, two users"); },
+}).default(fn(){ print("We got lots of users"); });
+
+// loops e if passam valor por referencia, logo isso deve ser valido
+var size = users.size();
+while(size != 0, fn(size){
+	size--;
+}, size);
+
+//array 2d
+var arrayD2: num[10][10] = none; // finge q tem valor
+repeat(10, fn(loop i){
+	repeat(10, fn(loop j){
+		if(j & 1, flow.continue);
+		print(f"Valor: {array2d[i][j]}");
+	})
+});
+
+// if com logica longa
+fn end_program(user[] users): none {
+	if(!users, flow.return);
+
+	print("Finallizing program...");
+
+	// Trecho em kitsu
+	foreach(users)
+		.if(it == none, flow.continue)
+			.else(it.destroy);
+
+	// equivalente em c++
+	for (auto& user in users) {
+		if (user == nullptr){
+			continue;
+		}
+		else{
+			delete user;
+		}
+	}
+
+	print("Done, thanks for using it.");
+}
+if(users.size() != 0, end_program, users);
+
+if().elif().else();
+	if() {
+
+	} else if() {
+
+	}else {
+
+	}
+
+
+var a: num = none;
+if (
+	a != none,
+	fn(num a){
+		print(a);
+
+		if(a & 1, print(" sou impar"))
+			.else( print(" sou par") );
+	}
+).else(print("Nao deu certo"));
+
+fn test1(string? str): num
+{
+	//contexto aterior eh a funcao, entao a funcao retorna
+	if(str == none, flow.return(1));
+
+	//Aqui o contexto eh o loop, logo ele se aplica ao loop
+	foreach(str).if(it == " ", flow.break);
+
+	//A unica excecao acaba sendo o return
+	foreach(str).if(it == "\n", flow.return(2));
+	// um return serve para sair da funcao atual, e eh isso q ele faz aqui
+
+	return (0);
+}
+
+
+var n = 0;
+// atribuicoes simples sao validas nas actions, EXPRECOES DE UMA LINHA
+if(n < 10, n++); //valido, unitarios devem ser validos
+if(n < 10, n = 10);
+if(n < 10, n += 10);
+
+var nums: num[10];
+foreach(nums, it += 10); // valido
+foreach(nums, ); // valido
+
+var n = 10;
+fn test(): num
+{
+	return 10;
+}
+var res = if(n < 10, test).else(10);

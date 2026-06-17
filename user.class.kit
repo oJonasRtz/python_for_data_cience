@@ -1,0 +1,17 @@
+var name = ""; // Protected var
+
+export fn create(string _name): none
+{
+	name = _name;
+}
+
+export fn destroy(): none
+{
+	print(f"{name} has been destroyed!");
+	name = none;	
+}
+
+export fn hello(): none
+{
+	print(f"Hello I'm {name}");
+}
